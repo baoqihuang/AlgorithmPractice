@@ -1,18 +1,20 @@
 
-public class ClosetNumInBST {
+public class LargestSmllestInBST {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 	}
 	/*
-	 * In a binary search tree, find the node containing the closest number to the given target number.
+	 * In a binary search tree, find the node containing the largest number smaller than the given target number.
+
+If there is no such number, return -2^31.
 
 Assumptions:
 
 The given root is not null.
 There are no duplicate keys in the binary search tree.
-Examples:
+Examples
 
     5
 
@@ -24,11 +26,11 @@ Examples:
 
     6     14
 
-closest number to 4 is 5
+largest number smaller than 1 is Integer.MIN_VALUE(Java) or INT_MIN(c++)
 
-closest number to 10 is 11
+largest number smaller than 10 is 6
 
-closest number to 6 is 6
+largest number smaller than 6 is 5
 
 How is the binary tree represented?
 
@@ -56,29 +58,20 @@ The sequence [1, 2, 3, #, #, 4] represents the following binary tree:
 	    	this.key = key;
 	    }
 	}
-	public int closest(TreeNode root, int target) {
+	public int largestSmaller(TreeNode root, int target) {
 	    // Write your solution here
-		int cloest = Integer.MIN_VALUE;
-		int minD = Integer.MAX_VALUE;
+		int largest = Integer.MIN_VALUE;
 		while (root != null) {
-			int curD = Math.abs(root.key - target);
-			if (curD == 0) {
-				return root.key;
-			} else if (root.key > target) {
-				if (curD < minD) {
-					minD = curD;
-					cloest = root.key;
-				}
+			if (root.key >= target) {
 				root = root.left;
 			} else {
-				if (curD < minD) {
-					minD = curD;
-					cloest = root.key;
+				if (root.key > largest) {
+					largest = root.key;
 				}
 				root = root.right;
 			}
 		}
-		return cloest;
+		return largest;
+		
 	}
-	 
 }
