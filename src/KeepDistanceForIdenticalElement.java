@@ -11,6 +11,34 @@ public class KeepDistanceForIdenticalElement {
 			System.out.print(i + ", ");
 		}
 	}
+	public static int[] naiveMethod (int k) {
+		int[] result = new int[k * 2];
+		boolean exist = false;
+		boolean isFirst = true;
+		for (int i = 1; i <= k; i++) { //the cur num
+			for (int j = 0; j < k; j++) { //the cur index
+				if (isFirst && result[j] == 0) {
+					result[j] = i;
+				}
+			}
+		}
+		return exist ? result : null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static int[] keepDistance(int k) {
 	    int[] array = new int[2 * k];
 	    for (int i = 0; i < k; i++) {

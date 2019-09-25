@@ -4,50 +4,51 @@ import java.util.List;
 public class FactorCombination {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		List<List<Integer>> res = combinations(10);
+		for (int i = 0; i < res.size(); i++) {
+			for (int num : res.get(i)) {
+				System.out.print(num +",  ");
+			}
+			System.out.println();
+		}
 	}
-	  public List<List<Integer>> combinations(int target) {
-		    // Write your solution here
-		    List<List<Integer>> result = new ArrayList<List<Integer>>();
-		    if (target <= 1) {
-		      return result;
-		    }
-		    List<Integer> factors = new ArrayList<>();
-		    List<Integer> cur = new ArrayList<>();
-		    getFactors (target, factors);
-		    helper (result, cur, factors, target, 0);
-		    return result;
+	public static List<List<Integer>> combinations(int target) {
+	    List<List<Integer>> result = new ArrayList<>();
+	    List<Integer> cur = new ArrayList<>();
+	    List<Integer> factors = findFactors(target);
+	    helper (result, cur, factors, target, 0);
+	    return result;
+	  }
+	  public static List<Integer> findFactors (int target) {
+	    List<Integer>factors = new ArrayList<>();
+	    for (int i = target - 1; i > 1; i--) {
+	      if (target % i == 0) {
+	        factors.add(i);
+	      }
+	    }
+	    return factors;
+	  }
+	  public static void helper (List<List<Integer>> result, List<Integer> cur, List<Integer> factors,
+	  int target, int index) {
+		  if (index == factors.size()) {
+			  if (target == 1) {
+				  result.add(new ArrayList<>(cur));
+			  }
+			  return;
 		  }
-		  public void helper (List<List<Integer>> result, List<Integer> cur, List<Integer> factors, int remain, int index) {
-		    if (remain == 1 && cur.size() > 1) {
-		      result.add(new ArrayList<>(cur));
-		      return;
-		    }
-		    if (index == factors.size()) {
-		      return;
-		    }
-		    for (int i = 0; i <= maxPower(remain, factors.get(index)); i++) {
-		      int factor = factors.get(index);
-		      cur.add(factor);
-		      helper(result, cur, factors, remain / (int)Math.pow(factor, i), index + 1);
-		      cur.remove(cur.size() - 1);
-		    }
-		  }
-		  public int maxPower (int num, int factor) {
-		    int power = 0;
-		    while (num >= factor) {
-		      num /= factor;
-		      power++;
-		    }
-		    return power;
-		  }
-		  public void getFactors (int target, List<Integer> factors) {
-		    for (int i = target - 1; i >= 2; i--) {
-		      if (target % i == 0) {
-		        factors.add(i);
-		      }
-		    }
-		  }
+		  helper (result, cur, factors, target, index + 1);
+	    int num = factors.get(index);
+	    int count = 0;
+	    while (target % num == 0) {
+	    	cur.add(num);
+	    	count++;
+	    	target /= num;
+	    	helper (result, cur, factors, target, index + 1);
+	    }
+	    for (int i = 0; i < count; i++) {
+	    	cur.remove(cur.size() - 1);
+			//helper (result, cur, factors, target, index + 1);
+	    }
+	  }
 
 }
